@@ -8,10 +8,15 @@
     font-family: 'Montserrat', sans-serif;
 }
 
+.large-wallet > .wallet-adapter-dropdown {
+    width: 100% !important;
+}
+
 .large-wallet > .wallet-adapter-dropdown > .wallet-adapter-button {
-    border-radius: 24px !important;
+    width: 100% !important;
     background-color: transparent !important;
-    @apply ring-black/10 ring-[0.5px] !text-gray-900 !text-xs whitespace-nowrap hover:!bg-zinc-100 transition
+    height: 52px !important;
+    @apply ring-black/10 ring-[0.5px] !text-gray-900 !text-xs whitespace-nowrap hover:!bg-zinc-100 transition !rounded-3xl lg:text-sm font-semibold !w-full lg:w-min justify-center items-center
 }
 
 .small-wallet > .wallet-adapter-dropdown > .wallet-adapter-button {

@@ -38,14 +38,10 @@ export function CoinflowForm() {
       >
         🇮🇱 Support Israel 🇮🇱
       </h3>
-      <span
-        className={
-          "text-gray-500 text-xs px-5 lg:px-4 mb-3 text-center"
-        }
-      >
-        * All donations go to the critical military supplies that we
-        have sourced to support the 300k reservists deployed to defend their
-        home and the families suffering from the ongoing conflict
+      <span className={"text-gray-500 text-xs px-5 lg:px-4 mb-3 text-center"}>
+        * All donations go to the critical military supplies that we have
+        sourced to support the 300k reservists deployed to defend their home and
+        the families suffering from the ongoing conflict
       </span>
       <div className={"small-wallet mb-7"}>
         {isReady ? <WalletMultiButton /> : null}
@@ -53,19 +49,24 @@ export function CoinflowForm() {
       <AmountSelector amount={amount} setAmount={setAmount} />
 
       {isReady ? null : (
-        <div className={"flex space-x-5 items-center mt-9"}>
-          <div className={"large-wallet"}>
-            <WalletMultiButton />
-          </div>
+        <div
+          className={
+            "flex flex-col lg:flex-row space-y-4 lg:space-y-0 space-x-0 lg:space-x-5 items-center justify-center mt-9 w-full px-4"
+          }
+        >
           <div
             onClick={() => setIsReady(true)}
             className={
-              "w-full max-w-[200px] cursor-pointer hover:bg-blue-500 transition bg-blue-600 rounded-3xl p-4 px-5 flex justify-center"
+              "w-full lg:w-min cursor-pointer hover:bg-blue-500 transition bg-blue-600 rounded-3xl p-4 px-6 flex justify-center"
             }
           >
-            <span className={"text-xs lg:text-sm font-semibold text-white"}>
+            <span className={"text-xs lg:text-sm font-semibold text-white whitespace-nowrap"}>
               Continue as guest
             </span>
+          </div>
+          <span className={"text-gray-500 text-xs"}>or</span>
+          <div className={"large-wallet w-min"}>
+            <WalletMultiButton />
           </div>
         </div>
       )}
