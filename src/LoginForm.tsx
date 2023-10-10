@@ -53,8 +53,8 @@ export default function LoginForm() {
                   <div className="mt-2">
                     <p className="text-sm text-gray-500 font-medium mb-5">
                       Show your support for the people of Israel and the 300k+
-                      citizens deployed to fight for their country. Many work in
-                      web3 & tech -- our friends need your support!
+                      citizens deployed to fight for their families. Many work in
+                      web3 & tech and desperately need your support.
                     </p>
                   </div>
 

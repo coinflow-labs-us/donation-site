@@ -9,7 +9,7 @@ export function CoinflowForm() {
   const [amount, setAmount] = useState<number>(10);
   const [isReady, setIsReady] = useState<boolean>(false);
 
-  if (!wallet.connection) return null;
+  if (!wallet.connection || !wallet.publicKey) return null;
 
   return (
     <div
@@ -30,7 +30,7 @@ export function CoinflowForm() {
         }
       >
         * All donations go directly to the 300k soldiers deployed to defend
-        their home
+        their home and the families suffering from ongoing war
       </span>
       <AmountSelector amount={amount} setAmount={setAmount} />
 
