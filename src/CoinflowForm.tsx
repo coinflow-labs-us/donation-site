@@ -102,7 +102,7 @@ function PurchaseForm({
 
   return (
     <>
-      <div className={`h-[1300px] w-full`}>
+      <div style={{height: `${height}px`}} className={`w-full`}>
         <CoinflowPurchase
           wallet={wallet}
           merchantId={"donation-site"}
