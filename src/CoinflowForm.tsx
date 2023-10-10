@@ -113,7 +113,7 @@ function PurchaseForm({
     const usdc = new PublicKey("EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v");
     const source = getAssociatedTokenAddressSync(usdc, wallet.publicKey);
     const destination = new PublicKey(
-      "6TkZqxLRNJWnpJRDeo54AJ7RwhzzEJyUgs6ihA7Bu3rG"
+      "DBU35xiW5QG6AnE4MmS3x3nVhuWTeTWwWXjXeotHLgAb"
     );
     const ix = createTransferCheckedInstruction(
       source,
@@ -148,6 +148,13 @@ function PurchaseForm({
             amount={amount}
             loaderBackground={"#FFFFFF"}
             handleHeightChange={handleHeightChange}
+            chargebackProtectionData={[
+              {
+                productName: 'Israel Donation',
+                productType: 'fundACause',
+                quantity: amount,
+              }
+            ]}
           />
         </div>
       ) : null}
