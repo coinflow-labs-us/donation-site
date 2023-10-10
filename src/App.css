@@ -8,6 +8,19 @@
     font-family: 'Montserrat', sans-serif;
 }
 
-.ant-message-notice-content {
-    border-radius: 12px; padding: 16px;
+.large-wallet > .wallet-adapter-dropdown > .wallet-adapter-button {
+    border-radius: 24px !important;
+    background-color: transparent !important;
+    @apply ring-black/10 ring-[0.5px] !text-gray-900 !text-xs whitespace-nowrap hover:!bg-zinc-100 transition
+}
+
+.small-wallet > .wallet-adapter-dropdown > .wallet-adapter-button {
+    border-radius: 24px !important;
+    background-color: transparent !important;
+    @apply !text-gray-600 !text-[10px] whitespace-nowrap !h-6 !px-2 ring-black/10 ring-[0.5px] hover:!bg-zinc-100 transition
+}
+
+.small-wallet > .wallet-adapter-dropdown > .wallet-adapter-button > i {
+    background-color: transparent !important;
+    @apply h-4 w-4
 }

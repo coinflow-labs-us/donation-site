@@ -1,18 +1,27 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { CoinflowPurchase } from "@coinflowlabs/react";
-import { useWallet } from "./wallet/Wallet";
+import { useLocalWallet } from "./wallet/Wallet";
 import SuccessModal from "./SuccessModal";
 import {
   createTransferCheckedInstruction,
   getAssociatedTokenAddressSync,
 } from "@solana/spl-token";
 import { Keypair, PublicKey, Transaction } from "@solana/web3.js";
+import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
+import { useWallet } from "@solana/wallet-adapter-react";
 
 export function CoinflowForm() {
-  const wallet = useWallet();
+  const wallet = useLocalWallet();
+  const { publicKey } = useWallet();
 
   const [amount, setAmount] = useState<number>(10);
   const [isReady, setIsReady] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (publicKey) {
+      setIsReady(true);
+    }
+  }, [publicKey]);
 
   if (!wallet.connection || !wallet.publicKey) return null;
 
@@ -31,27 +40,34 @@ export function CoinflowForm() {
       </h3>
       <span
         className={
-          "text-gray-500 text-xs lg:text-sm px-8 lg:px-4 mb-6 text-center"
+          "text-gray-500 text-xs px-5 lg:px-4 mb-3 text-center"
         }
       >
-        * All donations go directly to the 300k soldiers deployed to defend
-        their home and the families suffering from ongoing war
+        * All donations go to the critical military supplies that we
+        have sourced to support the 300k reservists deployed to defend their
+        home and the families suffering from the ongoing conflict
       </span>
+      <div className={"small-wallet mb-7"}>
+        {isReady ? <WalletMultiButton /> : null}
+      </div>
       <AmountSelector amount={amount} setAmount={setAmount} />
 
       {isReady ? null : (
-        <>
+        <div className={"flex space-x-5 items-center mt-9"}>
+          <div className={"large-wallet"}>
+            <WalletMultiButton />
+          </div>
           <div
             onClick={() => setIsReady(true)}
             className={
-              "w-full max-w-[200px] cursor-pointer hover:bg-blue-500 transition bg-blue-600 rounded-3xl p-4 px-5 mt-6 flex justify-center"
+              "w-full max-w-[200px] cursor-pointer hover:bg-blue-500 transition bg-blue-600 rounded-3xl p-4 px-5 flex justify-center"
             }
           >
             <span className={"text-xs lg:text-sm font-semibold text-white"}>
-              Continue
+              Continue as guest
             </span>
           </div>
-        </>
+        </div>
       )}
 
       <PurchaseForm
@@ -72,7 +88,7 @@ function PurchaseForm({
   setIsReady: (isReady: boolean) => void;
   isReady: boolean;
 }) {
-  const wallet = useWallet();
+  const wallet = useLocalWallet();
 
   const [successOpen, setSuccessOpen] = useState<boolean>(false);
 
@@ -125,7 +141,6 @@ function PurchaseForm({
             connection={wallet.connection}
             onSuccess={() => {
               setSuccessOpen(true);
-              setIsReady(false);
             }}
             transaction={transferTx}
             blockchain={"solana"}
@@ -189,7 +204,12 @@ function AmountInput({
   const [inputFocused, setInputFocused] = useState<boolean>(false);
 
   return (
-    <div className={"w-28 relative"} onClick={() => setInputFocused(true)}>
+    <div
+      className={"w-28 relative"}
+      onClick={() => {
+        setInputFocused(true);
+      }}
+    >
       <div
         className={
           "absolute left-2 top-0 bottom-0 flex items-center justify-center"

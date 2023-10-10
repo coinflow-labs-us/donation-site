@@ -13,7 +13,7 @@ export default function SuccessModal({
       <Transition appear show={isOpen} as={Fragment}>
         <Dialog
           as="div"
-          className="relative z-10"
+          className="relative z-50"
           onClose={() => setIsOpen(false)}
         >
           <Transition.Child
@@ -25,7 +25,7 @@ export default function SuccessModal({
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <div className="fixed inset-0 bg-black/25 ring-white/5 ring-[0.5px]" />
+            <div className="fixed inset-0 bg-black/80 ring-white/5 ring-[0.5px]" />
           </Transition.Child>
 
           <div className="fixed inset-0 overflow-y-auto">
