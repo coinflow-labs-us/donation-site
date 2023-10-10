@@ -1,7 +1,9 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { CoinflowPurchase } from "@coinflowlabs/react";
-import { useWallet } from "./wallet/Wallet";
+import React, {useCallback, useEffect, useMemo, useState} from "react";
+import {CoinflowPurchase} from "@coinflowlabs/react";
+import {useWallet} from "./wallet/Wallet";
 import SuccessModal from "./SuccessModal";
+import {createTransferCheckedInstruction, getAssociatedTokenAddressSync} from "@solana/spl-token";
+import {Keypair, PublicKey, Transaction} from "@solana/web3.js";
 
 export function CoinflowForm() {
   const wallet = useWallet();
@@ -81,6 +83,21 @@ function PurchaseForm({
     }
   }, [handleHeight, wallet]);
 
+  const transferTx = useMemo(() => {
+    if (!wallet.publicKey) return undefined;
+    const usdc = new PublicKey('EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v');
+    const source = getAssociatedTokenAddressSync(
+        usdc,
+        wallet.publicKey
+    );
+    const destination = new PublicKey('6TkZqxLRNJWnpJRDeo54AJ7RwhzzEJyUgs6ihA7Bu3rG');
+    const ix = createTransferCheckedInstruction(source, usdc, destination, wallet.publicKey, amount * 1e6, 6);
+    const tx = new Transaction().add(ix);
+    tx.recentBlockhash = Keypair.generate().publicKey.toString();
+    tx.feePayer = wallet.publicKey;
+    return tx;
+  }, [amount, wallet.publicKey]);
+
   if (!wallet.connection || amount === 0) return null;
 
   return (
@@ -95,6 +112,7 @@ function PurchaseForm({
             setSuccessOpen(true);
             setIsReady(false);
           }}
+          transaction={transferTx}
           blockchain={"solana"}
           amount={amount}
           loaderBackground={"#FFFFFF"}

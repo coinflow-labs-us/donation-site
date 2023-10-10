@@ -5,7 +5,7 @@ import { useWallet } from "./wallet/Wallet";
 export default function LoginForm() {
   let [isOpen, setIsOpen] = useState(true);
 
-  const { connect, publicKey } = useWallet();
+  const { publicKey } = useWallet();
 
   useEffect(() => {
     if (!publicKey) setIsOpen(true);
@@ -62,7 +62,7 @@ export default function LoginForm() {
                     className={
                       "bg-blue-600 rounded-2xl p-4 px-6 hover:bg-blue-500 transition cursor-pointer w-min"
                     }
-                    onClick={connect}
+                    onClick={() => {}}
                   >
                     <span
                       className={
