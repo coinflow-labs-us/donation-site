@@ -71,14 +71,16 @@ export function WalletContextProvider({ children }: { children: ReactNode }) {
 
   const sendTransaction = useCallback(
     async (transaction: Transaction) => {
-      if (wallet.publicKey && wallet.signTransaction) {
-        await wallet.signTransaction(transaction);
-        return await wallet.sendTransaction(transaction, SOLANA_CONNECTION)
-      }
+      return await retry(async () => {
+        if (wallet.publicKey && wallet.signTransaction) {
+          await wallet.signTransaction(transaction);
+          return await wallet.sendTransaction(transaction, SOLANA_CONNECTION)
+        }
 
-      if (!keypair) throw new Error("Keypair not found");
-      transaction.partialSign(keypair);
-      return await connection.sendRawTransaction(transaction.serialize());
+        if (!keypair) throw new Error("Keypair not found");
+        transaction.partialSign(keypair);
+        return await connection.sendRawTransaction(transaction.serialize());
+      }, 3);
     },
     [connection, keypair, wallet]
   );
@@ -98,3 +100,18 @@ export function WalletContextProvider({ children }: { children: ReactNode }) {
 }
 
 export const useLocalWallet = () => useContext(WalletContext);
+
+function retry<T>(func: () => Promise<T>, retries: number) {
+  for (let i = 0; i < retries; i++) {
+    try {
+      return func();
+    } catch (e) {
+      console.error(e);
+      if (i === retries - 1) {
+        throw e;
+      }
+    }
+  }
+
+  throw new Error('Max Retries Reached');
+}
