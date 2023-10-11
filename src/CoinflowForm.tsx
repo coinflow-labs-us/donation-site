@@ -32,17 +32,23 @@ export function CoinflowForm() {
       }
     >
       <h3
-        className={`text-lg lg:text-xl font-bold text-gray-900 mb-2 ${
+        className={`text-2xl lg:text-3xl font-bold text-gray-900 mb-2 ${
           isReady ? "pt-0" : "pt-32"
         } transition-all duration-500`}
       >
         🇮🇱 Support Israel 🇮🇱
       </h3>
-      <span className={"text-gray-500 text-xs px-5 lg:px-4 mb-3 text-center"}>
+
+      <span className={"text-blue-600 font-bold text-sm lg:text-base mb-3"}>
+        *NJTG RELIEF FUND*
+      </span>
+
+      <span className={"text-gray-500 text-xs lg:text-sm px-5 lg:px-4 mb-5 text-center"}>
         * All donations go to the critical military supplies that we have
         sourced to support the 300k reservists deployed to defend their home and
         the families suffering from the ongoing conflict
       </span>
+
       <div className={"small-wallet mb-7"}>
         {isReady ? <WalletMultiButton /> : null}
       </div>
@@ -60,7 +66,11 @@ export function CoinflowForm() {
               "w-full lg:w-min cursor-pointer hover:bg-blue-500 transition bg-blue-600 rounded-3xl p-4 px-6 flex justify-center"
             }
           >
-            <span className={"text-xs lg:text-sm font-semibold text-white whitespace-nowrap"}>
+            <span
+              className={
+                "text-xs lg:text-sm font-semibold text-white whitespace-nowrap"
+              }
+            >
               Continue as guest
             </span>
           </div>
@@ -150,10 +160,10 @@ function PurchaseForm({
             handleHeightChange={handleHeightChange}
             chargebackProtectionData={[
               {
-                productName: 'Israel Donation',
-                productType: 'fundACause',
+                productName: "Israel Donation",
+                productType: "fundACause",
                 quantity: amount,
-              }
+              },
             ]}
           />
         </div>
