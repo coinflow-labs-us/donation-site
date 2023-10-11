@@ -13,7 +13,7 @@ require('@solana/wallet-adapter-react-ui/styles.css');
 function App() {
   return (
     <ContextWrapper>
-        <CoinflowPurchaseProtection coinflowEnv={'prod'}/>
+      <CoinflowPurchaseProtection coinflowEnv={'prod'}/>
       <div
         className={
           "w-full flex flex-center min-h-screen bg-white overflow-auto"
